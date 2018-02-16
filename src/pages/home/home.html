@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+      <ion-card-header>
+        Ton profil
+      </ion-card-header>
+      
+      <ion-list>
+          <ion-item>
+              <ion-icon name="person"></ion-icon>
+              {{surname}} {{first_name}}
+          </ion-item>
+
+          <ion-item>
+              <ion-icon name="at"></ion-icon>
+              {{email}}
+          </ion-item>
+          <button ion-button color="secondary" outline (click)="show_modify()">Modifier compte</button>
+          <button ion-button color="secondary" outline (click)="show_modify_mdp()">Modifier mot de passe</button>
+      
+          <ion-item>
+              <ion-icon name="podium"></ion-icon>
+              Tes traits forts
+              <ion-list>
+                  <ion-item *ngFor="let trait of traits()">
+                - {{trait}}
+              </ion-item>
+            </ion-list>
+          </ion-item>
+
+      </ion-list>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      Son profil
+    </ion-card-header>
+    
+    <ion-list>
+        <ion-item>
+            <ion-icon name="person"></ion-icon>
+            {{other_first_name}}
+        </ion-item>
+
+        <ion-item>
+            <ion-icon name="podium"></ion-icon>
+            Ses traits forts
+            <ion-list>
+                <ion-item *ngFor="let trait of other_traits()">
+              - {{trait}}
+            </ion-item>
+          </ion-list>
+        </ion-item>
+  </ion-list>
+    <button ion-button color="secondary" outline (click)="show_evaluate()">Evaluer la relation</button>
+  </ion-card>
+</ion-content>

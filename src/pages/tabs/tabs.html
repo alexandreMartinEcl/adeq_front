@@ -1,0 +1,9 @@
+<ion-tabs selectedIndex="1">
+  <ion-tab [root]="tab1Root" (ionSelect)="change_icon('home')" tabTitle="Home" tabIcon={{home_icon}}></ion-tab>
+  <ion-tab [root]="tab2Root" (ionSelect)="change_icon('quest')" tabTitle="Questions" tabIcon={{quest_icon}}></ion-tab>
+  <ion-tab [root]="tab3Root" (ionSelect)="change_icon('disc')" tabTitle="Discussion" tabIcon={{disc_icon}}></ion-tab>
+</ion-tabs>
+<form (ngSubmit)="log_out()">
+  <button ion-button type="submit">Log out</button>
+</form>
+

@@ -1,0 +1,28 @@
+
+.toolbar-title{
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#disc_message .guest{
+    background: color($colors, secondary); 
+    float:left;
+    width:100%;
+}
+
+#disc_message .host{
+    background: color($colors, primary); 
+    float:right;
+    width:100%;
+    text-align: right;
+}

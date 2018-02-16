@@ -1,0 +1,26 @@
+<!--
+  Generated template for the DiscussionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title *ngIf='name'>Discussion with {{name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<ion-grid *ngIf='messages'>
+  <ion-card id="disc_message" *ngFor="let message of messages">
+    <div class="{{get_type(message.type)}}">{{message.content}}</div>
+  </ion-card>
+</ion-grid>
+<form (ngSubmit)="send_message()">
+    <ion-input [(ngModel)]="curr_message" name="message_text" type="text"></ion-input>
+    <button ion-button type="submit">Send</button>
+</form>
+</ion-content>

@@ -107,7 +107,9 @@ export class ConnectionPage {
     let subs = this.make_subs();
     console.log(JSON.stringify(subs));
 
-    if(subs.error !== "false"){
+    if(subs.error){
+      console.log("Erreur déclenchée");
+      console.log(subs.error);
       this.password_subs = "";
       this.password2_subs = "";
       let alert = this.alertCtrl.create({
@@ -118,6 +120,7 @@ export class ConnectionPage {
       alert.present();
     }
     else{
+      console.log("LS: trying subscribe request");
       this.req_subs(subs).subscribe(res => {
         console.log("Async-LC: Result from connection");
         console.log(res);

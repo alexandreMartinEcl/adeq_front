@@ -107,7 +107,7 @@ export class ConnectionPage {
     let subs = this.make_subs();
     console.log(JSON.stringify(subs));
 
-    if(subs.error){
+    if(subs.error !== "false"){
       this.password_subs = "";
       this.password2_subs = "";
       let alert = this.alertCtrl.create({

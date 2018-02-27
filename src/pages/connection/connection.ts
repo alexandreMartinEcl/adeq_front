@@ -95,12 +95,15 @@ export class ConnectionPage {
         else{
           alert(res.data.message);
         }
+      }, error =>{
+        console.log(error);
+        alert(JSON.parse(error._body).code);
       });
     }
   }
 
   launch_subs(){
-    console.log("LC: Try subscribing");
+    console.log("LS: Try subscribing");
     let subs = this.make_subs();
     console.log(JSON.stringify(subs));
 

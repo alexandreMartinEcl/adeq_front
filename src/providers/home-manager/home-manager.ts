@@ -56,7 +56,6 @@ export class HomeManagerProvider {
       {eval: mark},
       {params: {access_token: token}}).map(res => {
       
-      console.log(res);
       return res.json();
     });
   }
@@ -88,6 +87,7 @@ export class HomeManagerProvider {
         page.eval_res = Number(data);
         console.log("Eval chosen " + page.eval_res);
         this.send_eval(data).subscribe(res => {
+          console.log(res);
           if(res.status === "ok"){
             console.log("Eval posted without error");
           }

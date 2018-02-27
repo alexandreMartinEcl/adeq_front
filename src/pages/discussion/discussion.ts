@@ -10,9 +10,9 @@ import { GlobalVarsProvider } from "../../providers/global-vars/global-vars";
   templateUrl: 'discussion.html',
 })
 export class DiscussionPage {
-  name: string;
+  name: String;
   messages: any[];
-  curr_message: string;
+  curr_message: String;
   last_req_time: Date;
   role: String;
 
@@ -20,17 +20,25 @@ export class DiscussionPage {
               public navParams: NavParams,
               private dProv: DiscManagerProvider,
               private globVars: GlobalVarsProvider) {
-    this.dProv.init_discussion(this);
-    this.dProv.listen_messages(this);
-    this.role = globVars.role;
+    if (this.display_name()) {
+      this.dProv.init_discussion(this);
+      this.dProv.listen_messages(this);
+      this.role = globVars.role;
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DiscussionPage');
   }
 
-  display_name(name){
-    this.name = name;
+  display_name(){
+    let name = this.globVars.currentMatch;
+    if (name.length > 0) {
+      this.name = name;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   add_last_messages(messages){

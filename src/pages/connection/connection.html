@@ -14,26 +14,62 @@
 
 
 <ion-content padding>
-    <form (ngSubmit)="launch_connect()">
+  <form (ngSubmit)="launch_connect()">
 
-        <ion-item>
-            <ion-label stacked>Email</ion-label>
-            <ion-input [(ngModel)]="email" name="email" type="text"></ion-input>
-        </ion-item>
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input [(ngModel)]="email_conn" name="email" type="text"></ion-input>
+    </ion-item>
 
-        <ion-item>
-            <ion-label stacked>Password</ion-label>
-            <ion-input [(ngModel)]="password" name="password" type="password"></ion-input>
-        </ion-item>
+    <ion-item>
+      <ion-label stacked>Password</ion-label>
+      <ion-input [(ngModel)]="password_conn" name="password" type="password"></ion-input>
+    </ion-item>
 
-        <ion-item>
-          <ion-label>Connexion automatique ?</ion-label>
-          <ion-checkbox color="dark" [(ngModel)]="autoconnect" checked="autoconnect" name="check_autoconnect"></ion-checkbox>
-        </ion-item>
+    <ion-item>
+      <ion-label>Connexion automatique ?</ion-label>
+      <ion-checkbox color="dark" [(ngModel)]="autoconnect" checked="autoconnect" name="check_autoconnect"></ion-checkbox>
+    </ion-item>
 
-        <button ion-button type="submit">Send</button>
+    <button ion-button type="submit">Sign in</button>
+
+  </form>        
+
+  <button ion-button *ngIf="!subs_is_disp" (click)="disp_subs();">No account yet ?</button>
+
+  <div *ngIf="subs_is_disp" id="subs_menu">
+    <ion-title >No account yet ?</ion-title>
+
+    <form (ngSubmit)="launch_subs()">
+
+      <ion-item>
+        <ion-label stacked>Family name</ion-label>
+        <ion-input [(ngModel)]="fam_name" name="fam_name" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>First name</ion-label>
+        <ion-input [(ngModel)]="first_name" name="fam_name" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input [(ngModel)]="email_subs" name="email" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Password</ion-label>
+        <ion-input [(ngModel)]="password_subs" name="password" type="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Type the password again</ion-label>
+        <ion-input [(ngModel)]="password2_subs" name="password" type="password"></ion-input>
+      </ion-item>
+
+      <button ion-button type="submit">Sign up</button>
 
     </form>        
+  </div>
 </ion-content>
 
-<ion-title>Sign up</ion-title>

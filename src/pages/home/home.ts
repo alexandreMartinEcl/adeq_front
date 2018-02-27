@@ -31,15 +31,15 @@ export class HomePage {
     this.surname = this.globVars.lastName;
     this.first_name = this.globVars.firstName;
     this.email = this.globVars.email;
-    this.other_first_name = "Clitorine";
+    this.other_first_name = this.globVars.currentMatch;
   }
 
   traits(){
-    return ["Audace", "Exigence", "Respect"];
+    return []//"Audace", "Exigence", "Respect"];
   }
 
   other_traits(){
-    return ["Sport", "Timidité", "Fan de José Garcia"];
+    return []//"Sport", "Timidité", "Fan de José Garcia"];
   }
 
   show_modify(){

@@ -8,6 +8,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { GlobalVarsProvider } from "../../providers/global-vars/global-vars";
 import { Socket } from 'ng-socket-io';
+import { AlertController} from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
 
@@ -17,21 +18,31 @@ import { TabsPage } from '../tabs/tabs';
   templateUrl: 'connection.html',
 })
 export class ConnectionPage {
-  email: string;
-  password: string;
+  email_conn: string;
+  password_conn: string;
   autoconnect: boolean;
+
+  subs_is_disp: boolean;
+  lastName: string;
+  firstName: string;
+  email_subs: string;
+  password_subs: string;
+  password2_subs: string;
 
   main_url = this.globVars.MAIN_URL;  
   auth_url = this.main_url + "/auth";
+  subs_url = this.main_url + "/users";
   
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private storage: Storage,
+              private alertCtrl: AlertController,
               private http: Http,
               //private http: HTTP,
               private socket: Socket,
               private globVars: GlobalVarsProvider) {
     this.check_storage();
+    this.subs_is_disp = false;
   }
 
   ionViewDidLoad() {
@@ -47,7 +58,7 @@ export class ConnectionPage {
   }
 /*
     return new Observable(observer => {
-        if((logins.email == "w848") && (logins.password == "password")){
+        if((logins.email_conn == "w848") && (logins.password_conn == "password")){
           observer.next(JSON.parse(JSON.stringify(this.example_good)));                
         }
         else{
@@ -58,12 +69,16 @@ export class ConnectionPage {
   }
 */
 
+  req_subs(subs){
+    return this.http.post(this.subs_url, subs).map(res => res.json());
+  }
+
   launch_connect(){
     console.log("LC: Try connection");
     let logins = this.make_logins();
     console.log(JSON.stringify(logins));
   
-    if((this.email.length > 0) && (this.password.length > 0)){
+    if((this.email_conn.length > 0) && (this.password_conn.length > 0)){
 
 //      this.req_auth(logins).then(res => {
       this.req_auth(logins).subscribe(res => {
@@ -80,9 +95,48 @@ export class ConnectionPage {
         else{
           alert(res.data.message);
         }
-
       });
+    }
+  }
 
+  launch_subs(){
+    console.log("LC: Try subscribing");
+    let subs = this.make_subs();
+    console.log(JSON.stringify(subs));
+
+    if(subs.error){
+      this.password_subs = "";
+      this.password2_subs = "";
+      let alert = this.alertCtrl.create({
+        title: 'Subscribing error',
+        subTitle: subs.error,
+        buttons: ['Dismiss']
+      });
+      alert.present();
+    }
+    else{
+      this.req_subs(subs).subscribe(res => {
+        console.log("Async-LC: Result from connection");
+        console.log(res);
+        
+        if(!res.code){
+          console.log("Async-LC: Subscribing accepted");
+          let alert = this.alertCtrl.create({
+            title: 'Profile waiting to be confirmed',
+            subTitle: "An email has been sent to your adress, please confirm your account",
+            buttons: ['Dismiss']
+          });
+          this.disp_subs();
+        }
+        else{
+          console.log("Async-LC: Subscribing refused");
+          let alert = this.alertCtrl.create({
+            title: 'Profile refused',
+            subTitle: res.message,
+            buttons: ['Dismiss']
+          });
+        }
+      });
     }
   }
 
@@ -95,8 +149,8 @@ export class ConnectionPage {
       if(res != null){
         console.log("Async-CS: Updating page.data");
         res = JSON.parse(res);
-        this.email = res.email || "";
-        this.password = res.password || "";
+        this.email_conn = res.email_conn || "";
+        this.password_conn = res.password_conn || "";
         this.autoconnect = res.autoconnect || false;
   
         if(res.autoconnect){
@@ -106,20 +160,55 @@ export class ConnectionPage {
       else{
         console.log("Async-CS: Initialising page.data to ''");
         
-        this.email = "";
-        this.password = "";
+        this.email_conn = "";
+        this.password_conn = "";
         this.autoconnect = false;
       }
     });
   }
 
   make_logins(){
-    let obj = {"email": this.email,
-                "password": this.password,
-                "autoconnect": this.autoconnect
+    let obj = {"email": this.email_conn,
+      "password": this.password_conn,
+      "autoconnect": this.autoconnect
     };
 
     return JSON.parse(JSON.stringify(obj));
   }
-  
+
+  make_subs(){
+    let obj = null;
+    if(this.lastName.length == 0){
+      obj = {"error": "Please fill up family name"};
+    }
+    else if(this.firstName.length == 0){
+      obj = {"error": "Please fill up first name"};
+    }
+    else if(this.email_subs.length == 0){
+      obj = {"error": "Please fill up email"};
+    }
+    else if(this.password_subs.length == 0){
+      obj = {"error": "Please fill up password"};
+    }
+    else if(this.password_subs !== this.password2_subs){
+      obj = {"error": "The passwords are different"};
+    }
+    else{
+      obj = {
+        "error": false,
+        "lastName": this.lastName,
+        "firstName": this.firstName,
+        "email": this.email_subs,
+        "password": this.password_subs,
+        "password2": this.password2_subs,
+      };
+    }
+
+    return JSON.parse(JSON.stringify(obj));
+  }
+
+  disp_subs(){
+    console.log("Subscribing menu displayed");
+    this.subs_is_disp = !this.subs_is_disp;
+  }
 }

@@ -54,7 +54,6 @@ export class DiscManagerProvider {
   
   disp_discussion(data, page){
     page.display_messages(data.messages);
-    page.display_name(data.name);
   }
 
   get_disp_online_data(page){

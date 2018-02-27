@@ -31,7 +31,7 @@ export class ConnectionPage {
 
   main_url = this.globVars.MAIN_URL;  
   auth_url = this.main_url + "/auth";
-  subs_url = this.main_url + "/users";
+  subs_url = this.main_url + "/new_user";
   
   constructor(public navCtrl: NavController,
               public navParams: NavParams,

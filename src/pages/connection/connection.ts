@@ -64,7 +64,7 @@ export class ConnectionPage {
         else{
           observer.next(JSON.parse(JSON.stringify(this.example_bad)));                
         }
-      }
+      } 
     );
   }
 */
@@ -155,8 +155,9 @@ export class ConnectionPage {
       if(res != null){
         console.log("Async-CS: Updating page.data");
         res = JSON.parse(res);
-        this.email_conn = res.email_conn || "";
-        this.password_conn = res.password_conn || "";
+        console.log(res);
+        this.email_conn = res.email || "";
+        this.password_conn = res.password || "";
         this.autoconnect = res.autoconnect || false;
   
         if(res.autoconnect){

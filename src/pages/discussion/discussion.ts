@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DiscManagerProvider } from '../../providers/disc-manager/disc-manager';
 import { GlobalVarsProvider } from "../../providers/global-vars/global-vars";
-
+import { ToastController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -19,7 +19,10 @@ export class DiscussionPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private dProv: DiscManagerProvider,
-              private globVars: GlobalVarsProvider) {
+              private globVars: GlobalVarsProvider,
+              public toastCtrl: ToastController) {
+    console.log('Hello discussion page');
+
     if (this.display_name()) {
       this.dProv.init_discussion(this);
       this.dProv.listen_messages(this);
@@ -68,7 +71,21 @@ export class DiscussionPage {
   }
 
   send_message(){
-    console.log("Message envoyé: " + this.curr_message);
+    console.log("Message pour envoi: " + this.curr_message);
+
+    if (!this.curr_message) {
+      return;
+    }
+
+    if (!this.globVars.get_connected()) {
+      let toast = this.toastCtrl.create({
+        message: "You have no internet connection. (Désolé il y a pas de mise en mémoire des messages pour l'instant.. attends d'avoir du réseau stp :/)",
+        duration: 3000,
+        position: 'top',
+      });
+      toast.present();
+      return;
+    }
 
     let new_mess = {
       "content": this.curr_message,

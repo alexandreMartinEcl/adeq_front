@@ -20,7 +20,7 @@
   </ion-card>
 </ion-grid>
 <form (ngSubmit)="send_message()">
-    <ion-input [(ngModel)]="curr_message" name="message_text" type="text"></ion-input>
+    <ion-input [(ngModel)]="curr_message" name="message_text" type="text" placeholder="Write message" ></ion-input>
     <button ion-button type="submit">Send</button>
 </form>
 </ion-content>

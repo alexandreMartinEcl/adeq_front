@@ -24,11 +24,17 @@ export class DiscManagerProvider {
   listen_messages(page){
     console.log("LM: opening socket listener");
     this.socket.connect();
+
+    this.globVars.set_socket(this.socket);
+    this.globVars.set_discPageOpen(true);
+    this.globVars.set_discPage(page);
+
     this.socket.emit('room', this.globVars.get_socket_name());
     this.socket.on('message', (msgs) => {
-      console.log("LM: message received" + msgs.toString());
+      console.log("LM: message received");
+      console.log(msgs);
       page.add_last_messages(msgs);
-    })
+    });
   }
 
   req_send_msg(msg){

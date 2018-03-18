@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import { GlobalVarsProvider } from "../../providers/global-vars/global-vars";
 import { Socket } from 'ng-socket-io';
 import { AlertController} from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
 
@@ -40,7 +41,8 @@ export class ConnectionPage {
               private http: Http,
               //private http: HTTP,
               private socket: Socket,
-              private globVars: GlobalVarsProvider) {
+              private globVars: GlobalVarsProvider,
+              public toastCtrl: ToastController) {
     this.check_storage();
     this.subs_is_disp = false;
   }
@@ -75,6 +77,17 @@ export class ConnectionPage {
 
   launch_connect(){
     console.log("LC: Try connection");
+    
+    if (!this.globVars.get_connected()) {
+      let toast = this.toastCtrl.create({
+        message: "You have no internet connection. Try later.",
+        duration: 3000,
+        position: 'top',
+      });
+      toast.present();
+      return;
+    }
+
     let logins = this.make_logins();
     console.log(JSON.stringify(logins));
   
@@ -104,6 +117,17 @@ export class ConnectionPage {
 
   launch_subs(){
     console.log("LS: Try subscribing");
+    
+    if (!this.globVars.get_connected()) {
+      let toast = this.toastCtrl.create({
+        message: "You have no internet connection. Try later.",
+        duration: 3000,
+        position: 'top',
+      });
+      toast.present();
+      return;
+    }
+
     let subs = this.make_subs();
     console.log(JSON.stringify(subs));
 

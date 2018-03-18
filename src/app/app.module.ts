@@ -5,7 +5,9 @@ import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:9000/discussions', options:{}};
+//const MAIN_URL = "http://localhost:9000";
+const MAIN_URL = "https://adeq.rezoleo.fr";
+const config: SocketIoConfig = { url: `${MAIN_URL}/discussions`, options:{}};
 import { HTTP } from '@ionic-native/http';
 
 import { HomePage } from '../pages/home/home';
@@ -13,6 +15,7 @@ import { QuestionsPageModule } from '../pages/questions/questions.module';
 import { DiscussionPageModule } from '../pages/discussion/discussion.module';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ConnectionPageModule } from '../pages/connection/connection.module';
+import { Network } from '@ionic-native/network';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -51,7 +54,8 @@ import { HomeManagerProvider } from '../providers/home-manager/home-manager';
     DiscManagerProvider,
     GlobalVarsProvider,
     HomeManagerProvider,
-    HTTP
+    HTTP,
+    Network,
   ]
 })
 export class AppModule {}

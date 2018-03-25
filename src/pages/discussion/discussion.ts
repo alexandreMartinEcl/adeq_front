@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DiscManagerProvider } from '../../providers/disc-manager/disc-manager';
 import { GlobalVarsProvider } from "../../providers/global-vars/global-vars";
 import { ToastController } from 'ionic-angular';
+import { PushNotificationsService } from 'ng-push';
 
 @IonicPage()
 @Component({
@@ -20,7 +21,8 @@ export class DiscussionPage {
               public navParams: NavParams,
               private dProv: DiscManagerProvider,
               private globVars: GlobalVarsProvider,
-              public toastCtrl: ToastController) {
+              public toastCtrl: ToastController,
+              private notif: PushNotificationsService) {
     console.log('Hello discussion page');
 
     if (this.display_name()) {
@@ -47,7 +49,15 @@ export class DiscussionPage {
   add_last_messages(messages){
     console.log("Update-online: messages to add");
     console.log(messages);
-        
+  
+    console.log(this.role);
+    if (messages[0].type !== this.role) {
+      this.notif.create('Message', {body: `You have a new message from ${this.name}`}).subscribe(
+        res => console.log(res),
+        err => console.log(err)
+      )
+    }
+
     let msgs = this.messages;
     msgs = msgs.concat(messages);
     this.display_messages(msgs);
@@ -62,7 +72,7 @@ export class DiscussionPage {
     
     if(messages != null){
       messages.sort(function(a, b) {
-        return (a.time > b.time) ? 1 : -1;
+        return (new Date(a.time) > new Date(b.time)) ? 1 : -1;
       });
       console.log(messages);
 

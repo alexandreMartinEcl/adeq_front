@@ -23,6 +23,7 @@ import { QuestManagerProvider } from '../providers/quest-manager/quest-manager';
 import { DiscManagerProvider } from '../providers/disc-manager/disc-manager';
 import { GlobalVarsProvider } from '../providers/global-vars/global-vars';
 import { HomeManagerProvider } from '../providers/home-manager/home-manager';
+import { PushNotificationsModule } from 'ng-push';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { HomeManagerProvider } from '../providers/home-manager/home-manager';
     SocketIoModule.forRoot(config),
     ConnectionPageModule,
     QuestionsPageModule,
-    DiscussionPageModule
+    DiscussionPageModule,
+    PushNotificationsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

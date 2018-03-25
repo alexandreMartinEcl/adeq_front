@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { GlobalVarsProvider } from "../global-vars/global-vars";
 import { Socket } from 'ng-socket-io';
 import 'rxjs/add/operator/map';
+import { PushNotificationsService } from 'ng-push';
 
 @Injectable()
 export class DiscManagerProvider {
@@ -17,7 +18,8 @@ export class DiscManagerProvider {
   constructor(public http: Http,
             private storage: Storage,
             private globVars: GlobalVarsProvider,
-            private socket: Socket) {
+            private socket: Socket,
+            private notif: PushNotificationsService) {
     console.log('Hello DiscManagerProvider Provider');
   }
 

@@ -3,6 +3,7 @@ import { Network } from '@ionic-native/network';
 import { DiscussionPage } from '../../pages/discussion/discussion';
 import { Socket } from 'ng-socket-io';
 import { ToastController } from 'ionic-angular';
+import { PushNotificationsService } from 'ng-push';
 
 @Injectable()
 export class GlobalVarsProvider {
@@ -27,7 +28,8 @@ export class GlobalVarsProvider {
   MAIN_URL = "https://adeq.rezoleo.fr";
   
   constructor(network: Network,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    private notif: PushNotificationsService) {
     console.log('Hello GlobalVarsProvider Provider');
     this.TOKEN = "";
     this.set_discPageOpen(false);
@@ -82,6 +84,10 @@ export class GlobalVarsProvider {
       }
 
     }, error => console.error(error));
+  }
+
+  listenMessage() {
+
   }
 
   set_token(token){this.TOKEN = token;}
